@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drive Mad</title>
+<style>
+body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 75%;
+            height: 100%;
+            border: none;
+        }
+
+        #sidebar {
+            height: 100%;
+            width: 25%;
+            float: right;
+            background: #eee;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="sidebar">
+<label for="startUrlInput">Enter the starting URL:</label>
+<input id="startUrlInput" type="url">
+<button onclick="updateFrameUrl()">Load URL</button>
+<br>
+<label for="keyInput">Update Local Storage Key:</label>
+<input id="keyInput" type="text" value="exampleKey">
+<button onclick="updateLocalStorageKey()">Update Key</button>
+</div>
+<iframe id="mainFrame"></iframe>
+<script>
+const frame = document.getElementById("mainFrame");
+
+        function updateFrameUrl() {
+            const startUrl = document.getElementById("startUrlInput").value;
+            frame.src = startUrl;
+        }
+
+        frame.addEventListener("load", function() {
+            const frameDoc = this.contentDocument || this.contentWindow.document;
+
+            const links = frameDoc.querySelectorAll("a");
+
+            for (const link of links) {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    frame.src = link.getAttribute("href");
+                });
+            }
+        });
+
+        function updateLocalStorageKey() {
+            const newKey = document.getElementById("keyInput").value;
+            localStorage.setItem(newKey, "exampleValue");
+        }
+    </script>
+</body>
+</html>
