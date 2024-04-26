@@ -39,10 +39,11 @@
 <iframe id="mainFrame"></iframe>
 <script>
     const frame = document.getElementById("mainFrame");
+    let storedKey = "exampleKey";
 
     function updateFrameUrl() {
       const startUrl = document.getElementById("startUrlInput").value;
-      const key = localStorage.getItem(document.getElementById("keyInput").value);
+      const key = localStorage.getItem(storedKey);
 
       if (key) {
         frame.src = startUrl + "#" + key;
@@ -54,6 +55,7 @@
     function updateLocalStorageKey() {
       const newKey = document.getElementById("keyInput").value;
       localStorage.setItem(newKey, "exampleValue");
+      storedKey = newKey;
     }
 </script>
 </body>
