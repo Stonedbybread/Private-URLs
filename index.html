@@ -41,7 +41,7 @@
         const frame = document.getElementById("mainFrame");
 
         function updateFrameUrl() {
-            const startUrl = document.getElementById("startUrlInput").value;
+            const startUrl = document.getElementById("startUrlInput").innerhtml;
             frame.src = startUrl;
         }
 
