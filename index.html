@@ -38,31 +38,23 @@
 </div>
 <iframe id="mainFrame"></iframe>
 <script>
-        const frame = document.getElementById("mainFrame");
+    const frame = document.getElementById("mainFrame");
 
-        function updateFrameUrl() {
-            const startUrl = document.getElementById("startUrlInput").innerhtml;
-            frame.src = startUrl;
-        }
+    function updateFrameUrl() {
+      const startUrl = document.getElementById("startUrlInput").value;
+      const key = localStorage.getItem(document.getElementById("keyInput").value);
 
-        frame.addEventListener("load", function() {
-            const frameDoc = this.contentDocument || this.contentWindow.document;
+      if (key) {
+        frame.src = startUrl + "#" + key;
+      } else {
+        frame.src = startUrl;
+      }
+    }
 
-            const links = frameDoc.querySelectorAll("a");
-
-            for (const link of links) {
-                link.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    frame.src = link.getAttribute("href");
-                });
-            }
-        });
-
-        function updateLocalStorageKey() {
-            const newKey = document.getElementById("keyInput").value;
-            localStorage.setItem(newKey, "exampleValue");
-        }
-    </script>
+    function updateLocalStorageKey() {
+      const newKey = document.getElementById("keyInput").value;
+      localStorage.setItem(newKey, "exampleValue");
+    }
+</script>
 </body>
 </html>
-
