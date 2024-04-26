@@ -12,51 +12,31 @@
         }
 
         iframe {
-            width: 75%;
+            width: 100%;
             height: 100%;
             border: none;
-        }
-
-        #sidebar {
-            height: 100%;
-            width: 25%;
-            float: right;
-            background: #eee;
-            padding: 10px;
         }
     </style>
 </head>
 <body>
-<div id="sidebar">
-<label for="startUrlInput">Enter the starting URL:</label>
-<input id="startUrlInput" type="url">
-<button onclick="updateFrameUrl()">Load URL</button>
-<br>
-<label for="keyInput">Update Local Storage Key:</label>
-<input id="keyInput" type="text" value="exampleKey">
-<button onclick="updateLocalStorageKey()">Update Key</button>
-</div>
 <iframe id="mainFrame"></iframe>
+<button onclick="requestUrlAndKey()">Load URL</button>
 <script>
-    const frame = document.getElementById("mainFrame");
-    let storedKey = "exampleKey";
+        const frame = document.getElementById("mainFrame");
+        let storedKey = "exampleKey";
 
-    function updateFrameUrl() {
-      const startUrl = document.getElementById("startUrlInput").value;
-      const key = localStorage.getItem(storedKey);
+        function requestUrlAndKey() {
+            const startUrl = prompt("Enter the starting URL:");
+            const newKey = prompt("Enter a new Local Storage Key (leave empty to keep current key):");
 
-      if (key) {
-        frame.src = startUrl + "#" + key;
-      } else {
-        frame.src = startUrl;
-      }
-    }
+            if (newKey) {
+                localStorage.setItem(newKey, "exampleValue");
+                storedKey = newKey;
+            }
 
-    function updateLocalStorageKey() {
-      const newKey = document.getElementById("keyInput").value;
-      localStorage.setItem(newKey, "exampleValue");
-      storedKey = newKey;
-    }
-</script>
+            const key = localStorage.getItem(storedKey);
+            frame.src = startUrl + (key ? "#" + key : "");
+        }
+    </script>
 </body>
 </html>
